@@ -1,0 +1,9 @@
+<library path="artebot_control">
+  <class name="artebot_control/ArteBotSystemHardware"
+         type="artebot_control::ArteBotSystemHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2_control system for driving a ArteBot using UART to move the motors.
+    </description>
+  </class>
+</library>

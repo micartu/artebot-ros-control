@@ -1,0 +1,4 @@
+[submodule "contrib/motorizer"]
+	path = contrib/motorizer
+	url = git@github.com:micartu/f401_motorizer.git
+	branch = main
