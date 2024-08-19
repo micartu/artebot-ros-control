@@ -201,22 +201,21 @@ hardware_interface::CallbackReturn ArteBotSystemHardware::on_deactivate(
 hardware_interface::return_type ArteBotSystemHardware::read(
     const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
+  const double dt = period.seconds();
 #ifdef DEBUG_TELE
   double pos1 = hw_positions_[0];
   double pos2 = hw_positions_[1];
-#else
-  // avoid compilation warning
-  (void)period;
 #endif
   try
   {
     struct MotorsOdometry odo = motors_->readOdometry();
-    hw_velocities_[0] = odo.vel1 * kSpeedTransform;
-    hw_positions_[0] = odo.pos1 * kInRad;
-    hw_velocities_[1] = odo.vel2 * kSpeedTransform;
-    hw_positions_[1] = odo.pos2 * kInRad;
+    double vel1 = odo.vel1 * kSpeedTransform;
+    double vel2 = odo.vel2 * kSpeedTransform;
+    hw_velocities_[0] = vel1;
+    hw_positions_[0] += vel1 * dt;
+    hw_velocities_[1] = vel2;
+    hw_positions_[1] += vel2 * dt;
 #ifdef DEBUG_TELE
-  const double dt = period.seconds();
   double v1 = (hw_positions_[0] - pos1) / dt;
   double v2 = (hw_positions_[1] - pos2) / dt;
 

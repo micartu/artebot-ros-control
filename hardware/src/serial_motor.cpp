@@ -92,7 +92,7 @@ struct MotorsOdometry SerialMotor::readOdometry()
     do
     {
         ret = sendPacket(CMD_TYPE_CUST,
-                         CUSTOM_VEL_POS,
+                         CUSTOM_VEL,
                          packet,
                          MAX_BUF_SZ,
                          sizeof(out));
@@ -102,17 +102,9 @@ struct MotorsOdometry SerialMotor::readOdometry()
     memcpy(&out.vel1, packet + sz, sizeof(out.vel1));
     sz += sizeof(out.vel1);
 
-    memcpy(&out.pos1, packet + sz, sizeof(out.pos1));
-    sz += sizeof(out.pos1);
-
     // second wheel
     memcpy(&out.vel2, packet + sz, sizeof(out.vel2));
     sz += sizeof(out.vel2);
-
-    memcpy(&out.pos2, packet + sz, sizeof(out.pos2));
-    sz += sizeof(out.pos2);
-    // RCLCPP_INFO(rclcpp::get_logger("ArteBotSystemHardware"),
-    //             ">> %d %d", out.pos1, out.pos2);
     return out;
 }
 
